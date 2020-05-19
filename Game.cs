@@ -21,7 +21,29 @@ namespace five_in_a_row
 
         public (int, int) GetMove(int player)
         {
-            return (0, 0);
+            input: Console.Write("Input your move (e.g. a2):");
+            var move = Console.ReadLine().ToLower();
+
+            if (move.Length == 0)
+            {
+                Console.WriteLine("Please input valid coordinates");
+                goto input;
+            }
+            
+            char row = move[0];
+            string col = move.Substring(1,1);
+            int rowNumber = (int) row;
+            bool isInt = int.TryParse(col, out int colNumber );
+            
+            // following magic numbers are: 97 UTF-8 for 'a'
+            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(1) ||
+                !isInt || colNumber > Board.GetLength(0))
+            { 
+                Console.WriteLine("Please input valid coordinates");
+                goto input;
+            }
+            
+            return (rowNumber - 97, colNumber);
         }
 
         public (int, int) GetAiMove(int player)
