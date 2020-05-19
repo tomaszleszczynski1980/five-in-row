@@ -53,8 +53,42 @@ namespace five_in_a_row
 
         public void Play(int howMany)
         {
-        }
+            
+            int numberOfPlayers = 0;
+            int counter = 1;
+            int player;
 
+            while (numberOfPlayers != 1 && numberOfPlayers != 2)
+            {
+                Console.Write("Enter number of players: ");
+                int.TryParse(Console.ReadLine(), out numberOfPlayers);
+            }
+
+
+            if (numberOfPlayers == 1) {
+                EnableAi(2);
+            }
+            
+            while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
+            {
+                player = counter % 2 == 1 ? 1 : 2;  // if (counter % 2 == 1) player = 1 else player = 2;
+
+                if (numberOfPlayers == 2) {
+                    var coords = GetAiMove(player);
+                }
+                else {
+                    var coords = GetMove(player);
+                }
+                
+                //Mark(player, coords, coords );
+            }
+            
+            PrintBoard();
+            
+            Console.Write("Enter any key to quit: ");
+            Console.ReadLine();
+        }
+        
         public void PrintResult(int player)
         {
         }
