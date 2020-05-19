@@ -8,6 +8,15 @@ namespace five_in_a_row
 
         public Game(int nRows, int nCols)
         {
+            Board = new int[nRows, nCols];
+
+            for (int i = 0; i < nRows; i++)
+            {
+                for (int j = 0; j < nCols; j++)
+                {
+                    Board[i, j] = 0;
+                }
+            }
         }
 
         public (int, int) GetMove(int player)
