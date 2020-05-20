@@ -78,7 +78,8 @@ namespace five_in_a_row
             
             int numberOfPlayers = 0;
             int counter = 1;
-            int player;
+            int player = 1;
+            (int, int) coords;
 
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
@@ -93,16 +94,12 @@ namespace five_in_a_row
             
             while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
             {
-                player = counter % 2 == 1 ? 1 : 2;  // if (counter % 2 == 1) player = 1 else player = 2;
-
-                if (numberOfPlayers == 2) {
-                    var coords = GetAiMove(player);
-                }
-                else {
-                    var coords = GetMove(player);
-                }
                 
-                //Mark(player, coords, coords );
+                coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
+
+                Mark(player, coords.Item1, coords.Item2 );
+
+                player = player == 1 ? 2 : 1;
             }
             
             PrintBoard();
