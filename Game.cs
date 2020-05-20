@@ -21,7 +21,7 @@ namespace five_in_a_row
 
         public (int, int) GetMove(int player)
         {
-            input: Console.Write("Input your move (e.g. a2):");
+            input: Console.Write($"Player {player} please input your move (e.g. a2):");
             var move = Console.ReadLine().ToLower();
 
             if (move.Length == 0)
@@ -31,8 +31,8 @@ namespace five_in_a_row
             }
             
             char row = move[0];
-            string col = move.Substring(1,1);
-            int rowNumber = (int) row;
+            string col = move.Substring(1, move.Length - 1);
+            int rowNumber = (int)row;
             bool isInt = int.TryParse(col, out int colNumber );
             
             // following magic numbers are: 97 UTF-8 for 'a'
@@ -43,7 +43,7 @@ namespace five_in_a_row
                 goto input;
             }
             
-            return (rowNumber - 97, colNumber);
+            return (rowNumber - 97, colNumber - 1);
         }
 
         public (int, int) GetAiMove(int player)
