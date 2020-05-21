@@ -189,7 +189,17 @@ namespace FiveInARow
 
         public bool IsNotFull()
         {
-            return Board.Cast<int>().Any(element => element == 0);
+            for (int row = 0; row < Board.GetLength(0) - 1; row++)
+            {
+                for (int col = 0; col < Board.GetLength(1) - 1; col++)
+                {
+                    if (Board[row, col] == 0)
+                        return true;
+                }
+            }
+
+            return false;
+            // return Board.Cast<int>().Any(element => element == 0);
         }
 
         public void PrintBoard()
