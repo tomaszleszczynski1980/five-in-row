@@ -162,6 +162,7 @@ namespace FiveInARow
             // Diagonally (left higher ; right lower) check
             
             // Diagonally (left lower ; right higher) check
+            // TODO: in this loop bug occurs (e1 - k1 wins one piece only)!
             for (int c = -howMany + 1; c <= 0; c++)
             {
                 for (int i = 0; i <= howMany - 1; i++)
