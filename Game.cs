@@ -107,29 +107,33 @@ namespace FiveInARow
             
             int numberOfPlayers = 0;
             int player = 2;
+            (int, int) coords;
 
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
                 Console.Write("Enter number of players: ");
                 int.TryParse(Console.ReadLine(), out numberOfPlayers);
             }
-
-
+            
             if (numberOfPlayers == 1)
             {
                 EnableAi(2);
             }
-            
-            while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
-            {
-                player = player == 1 ? 2 : 1;
-                
-                var coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
 
-                Mark(player, coords.Item1, coords.Item2 );
+            do
+            {
+                PrintBoard();
+
+                player = player == 1 ? 2 : 1;
+
+                coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
+
+                Mark(player, coords.Item1, coords.Item2);
                 
                 PrintBoard();
-            }
+                
+            } while (!HasWon(1, howMany, coords) && !HasWon(2, howMany, coords) && IsFull());
+
             
             PrintResult(player);
             
