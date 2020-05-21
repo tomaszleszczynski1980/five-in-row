@@ -66,6 +66,32 @@ namespace five_in_a_row
             }
         }
 
+        private static bool Comparer(int[] elementsArray)
+        {
+            int comparedElements = 0;
+            for (int i = 0; i < elementsArray.Length; i++)
+            {
+                try
+                {
+                    if (elementsArray[i] != elementsArray[i + 1])
+                    { 
+                        break;
+                    }
+                    
+                    comparedElements++;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    if (elementsArray[4] == elementsArray[3])
+                    {
+                        comparedElements++;
+                    }
+                }
+            }
+            
+            return comparedElements == 5;
+        }
+
         public bool HasWon(int player, int howMany)
         {
             return false;
