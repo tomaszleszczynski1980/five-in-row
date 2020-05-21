@@ -22,21 +22,6 @@ namespace five_in_a_row
             }
         }
         
-        //public static void Main()
-        //{
-        //    int[,] bord = new int[,] {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
-            
-
-        //    for (int i = 0; i < bord.GetLength(0); i++)
-        //    {
-
-        //        for (int j = 0; j < bord.GetLength(1); j++)
-        //        {
-        //            Console.Write(bord[i, j] + " ");
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
 
         public (int, int) GetMove(int player)
         {
@@ -97,12 +82,6 @@ namespace five_in_a_row
 
         public void PrintBoard()
         {
-            string[] StrArray = {"a","b","c","d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "w", "x", "y", "z"};
-
-            for (int j = 0; j < Board.GetLength(0); j++)
-            {
-                Console.Write(StrArray[j] + " ");
-            }
 
             for (int i = 0; i < Board.GetLength(0); i++)
             {
