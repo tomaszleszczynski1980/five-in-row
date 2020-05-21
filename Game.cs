@@ -4,10 +4,13 @@ namespace five_in_a_row
 {
     public class Game : IGame
     {
-        public int[,] Board { get; set; }
+
+        public int[,] Board {get; set;}
+
 
         public Game(int nRows, int nCols)
         {
+
             Board = new int[nRows, nCols];
 
             for (int i = 0; i < nRows; i++)
@@ -18,6 +21,22 @@ namespace five_in_a_row
                 }
             }
         }
+        
+        //public static void Main()
+        //{
+        //    int[,] bord = new int[,] {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
+            
+
+        //    for (int i = 0; i < bord.GetLength(0); i++)
+        //    {
+
+        //        for (int j = 0; j < bord.GetLength(1); j++)
+        //        {
+        //            Console.Write(bord[i, j] + " ");
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //}
 
         public (int, int) GetMove(int player)
         {
@@ -67,6 +86,21 @@ namespace five_in_a_row
 
         public void PrintBoard()
         {
+            string[] StrArray = {"a","b","c","d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "w", "x", "y", "z"};
+
+            for (int j = 0; j < Board.GetLength(0); j++)
+            {
+                Console.Write(StrArray[j] + " ");
+            }
+
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+            {
+                    Console.Write(Board[i,j]+" ");
+            }
+                Console.WriteLine();
+            }
         }
 
         public void EnableAi(int player)
@@ -75,7 +109,7 @@ namespace five_in_a_row
 
         public void Play(int howMany)
         {
-            
+
             int numberOfPlayers = 0;
             int counter = 1;
             int player = 1;
@@ -88,22 +122,23 @@ namespace five_in_a_row
             }
 
 
-            if (numberOfPlayers == 1) {
+            if (numberOfPlayers == 1)
+            {
                 EnableAi(2);
             }
-            
+
             while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
             {
-                
+
                 coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
 
-                Mark(player, coords.Item1, coords.Item2 );
+                Mark(player, coords.Item1, coords.Item2);
 
                 player = player == 1 ? 2 : 1;
             }
-            
+
             PrintBoard();
-            
+
             Console.Write("Enter any key to quit: ");
             Console.ReadLine();
         }
