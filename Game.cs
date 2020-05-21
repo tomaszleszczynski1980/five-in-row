@@ -82,16 +82,74 @@ namespace five_in_a_row
 
         public void PrintBoard()
         {
+            string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-            for (int i = 0; i < Board.GetLength(0); i++)
+
+            if (Board.GetLength(1) <= 9)
             {
-                for (int j = 0; j < Board.GetLength(1); j++)
-            {
-                    Console.Write(Board[i,j]+" ");
-            }
+                for (int j = 1; j <= Board.GetLength(1); j++)
+                {
+                    Console.Write(" " + j);
+                }
+                Console.WriteLine();
                 Console.WriteLine();
             }
-        }
+            else
+            {
+                for (int j = 1; j <= 9; j++)
+                {
+                    Console.Write(" " + j);
+                }
+
+                int times = (Board.GetLength(1) / 10) - 1;
+                int rest = Board.GetLength(1) % 10;
+                int counter = 1;
+
+                for (int i = 0; i < times; i++)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        Console.Write($" {counter}");
+                    }
+                    counter++;
+                }
+                for (int i = 0; i <= rest; i++)
+                {
+                    Console.Write(" " + counter);
+                }
+
+                Console.WriteLine();
+                for (int i = 0; i <= 8; i++)
+                {
+                    Console.Write("  ");
+                }
+
+                for (int i = 0; i < times; i++)
+                {
+                    for (int j = 0; j <= 9; j++)
+                    {
+                        Console.Write(" " + j);
+                    }
+                }
+                for (int k = 0; k <= rest; k++)
+                {
+                    Console.Write(" " + k);
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                Console.Write(letters[i] + " ");
+                for (int j = 0; j < Board.GetLength(1); j++)
+                {
+                    Console.Write(" " + Board[i, j]);
+                }
+                Console.WriteLine();
+
+            }
+        }   
+
 
         public void EnableAi(int player)
         {
