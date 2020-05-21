@@ -103,6 +103,7 @@ namespace FiveInARow
                     Console.Write(" " + i);
                 }
             }
+            Console.WriteLine();
 
             for (int i = 0; i < Board.GetLength(0); i++)
             {
@@ -138,7 +139,7 @@ namespace FiveInARow
                 EnableAi(2);
             }
             
-            while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
+            while (!HasWon(1, howMany) && !HasWon(2, howMany) && IsFull())
             {
                 player = player == 1 ? 2 : 1;
                 
