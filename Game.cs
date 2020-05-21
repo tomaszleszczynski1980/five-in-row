@@ -8,6 +8,7 @@ namespace five_in_a_row
 
         public Game(int nRows, int nCols)
         {
+
             Board = new int[nRows, nCols];
 
             for (int i = 0; i < nRows; i++)
@@ -104,6 +105,15 @@ namespace five_in_a_row
 
         public void PrintBoard()
         {
+
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+            {
+                    Console.Write(Board[i,j]+" ");
+            }
+                Console.WriteLine();
+            }
         }
 
         public void EnableAi(int player)
@@ -124,7 +134,8 @@ namespace five_in_a_row
             }
 
 
-            if (numberOfPlayers == 1) {
+            if (numberOfPlayers == 1)
+            {
                 EnableAi(2);
             }
             
