@@ -123,9 +123,22 @@ namespace FiveInARow
             for (int i = 0; i < Board.GetLength(0); i++)
             {
                 Console.Write(letters[i]);
+                char print;
                 for (int j = 0; j < Board.GetLength(1); j++)
                 {
-                    Console.Write("  " + Board[i, j]);
+                    switch (Board[i, j])
+                    {
+                        case 1:
+                            print = 'X';
+                            break;
+                        case 2:
+                            print = 'O';
+                            break;
+                        default:
+                            print = '.';
+                            break;
+                    }
+                    Console.Write("  " + print);
                 }
                 Console.WriteLine();
 
