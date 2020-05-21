@@ -23,6 +23,7 @@ namespace FiveInARow
 
         public (int, int) GetMove(int player)
         {
+            // TODO: refactor change goto to while
             input: Console.Write($"Player {player} please input your move (e.g. a2):");
             var move = Console.ReadLine().ToLower();
 
@@ -90,23 +91,42 @@ namespace FiveInARow
             return false;
         }
 
-        public bool IsFull()
+        public bool IsNotFull()
         {
             return Board.Cast<int>().Any(element => element == 0);
         }
 
         public void PrintBoard()
         {
+            string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+            Console.Clear();
+
+            Console.Write(" ");
+            for (int i = 1; i <= Board.GetLength(1); i++)
+            {
+                if (i <= 9)
+                {
+                    Console.Write("  " + i);
+                }
+                else
+                {
+                    Console.Write(" " + i);
+                }
+            }
+            Console.WriteLine();
 
             for (int i = 0; i < Board.GetLength(0); i++)
             {
+                Console.Write(letters[i]);
                 for (int j = 0; j < Board.GetLength(1); j++)
                 {
-                    Console.Write(Board[i,j]+" ");
+                    Console.Write("  " + Board[i, j]);
                 }
                 Console.WriteLine();
+
             }
-        }
+        }   
 
         public void EnableAi(int player)
         {
@@ -142,7 +162,7 @@ namespace FiveInARow
                 
                 PrintBoard();
                 
-            } while (!HasWon(1, howMany, coords) && !HasWon(2, howMany, coords) && IsFull());
+            } while (!HasWon(1, howMany, coords) && !HasWon(2, howMany, coords) && IsNotFull());
 
             
             PrintResult(player);
@@ -164,7 +184,7 @@ namespace FiveInARow
         (int, int) GetAiMove(int player);
         void Mark(int player, int row, int col);
         bool HasWon(int player, int howMany, (int, int) coords);
-        bool IsFull();
+        bool IsNotFull();
         void PrintBoard();
         void PrintResult(int player);
         void EnableAi(int player);
