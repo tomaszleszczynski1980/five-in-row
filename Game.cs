@@ -23,6 +23,7 @@ namespace FiveInARow
 
         public (int, int) GetMove(int player)
         {
+            // TODO: refactor change goto to while
             input: Console.Write($"Player {player} please input your move (e.g. a2):");
             var move = Console.ReadLine().ToLower();
 
