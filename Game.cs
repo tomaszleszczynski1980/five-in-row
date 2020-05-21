@@ -10,11 +10,11 @@ namespace FiveInARow
         public Game(int nRows, int nCols)
         {
 
-            Board = new int[nRows, nCols];
+            Board = new int[nRows + 1, nCols + 1];
 
-            for (int i = 0; i < nRows; i++)
+            for (int i = 0; i <= nRows; i++)
             {
-                for (int j = 0; j < nCols; j++)
+                for (int j = 0; j <= nCols; j++)
                 {
                     Board[i, j] = 0;
                 }
@@ -47,8 +47,8 @@ namespace FiveInARow
             bool isInt = int.TryParse(col, out int colNumber);
 
             // following magic numbers are: 97 UTF-8 for 'a'
-            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) ||
-                !isInt || colNumber > Board.GetLength(1))
+            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) - 1 ||
+                !isInt || colNumber > Board.GetLength(1) - 1)
             {
                 PrintBoard();
                 Console.WriteLine("");
@@ -74,7 +74,7 @@ namespace FiveInARow
 
         public void Mark(int player, int row, int col)
         {
-            if (row >= 0 && col >= 0 && row < Board.GetLength(0) && col < Board.GetLength(1))
+            if (row >= 0 && col >= 0 && row < Board.GetLength(0) - 1 && col < Board.GetLength(1) - 1)
             {
                 if (Board[row, col] == 0)
                     Board[row, col] = player;
@@ -199,7 +199,7 @@ namespace FiveInARow
             Console.Clear();
 
             Console.Write(" ");
-            for (int i = 1; i <= Board.GetLength(1); i++)
+            for (int i = 1; i <= Board.GetLength(1) - 1; i++)
             {
                 if (i <= 9)
                 {
@@ -212,11 +212,11 @@ namespace FiveInARow
             }
             Console.WriteLine();
 
-            for (int i = 0; i < Board.GetLength(0); i++)
+            for (int i = 0; i < Board.GetLength(0) - 1; i++)
             {
                 Console.Write(letters[i]);
                 char print;
-                for (int j = 0; j < Board.GetLength(1); j++)
+                for (int j = 0; j < Board.GetLength(1) - 1; j++)
                 {
                     switch (Board[i, j])
                     {
