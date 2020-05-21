@@ -52,13 +52,19 @@ namespace five_in_a_row
             char row = move[0];
             string col = move.Substring(1, move.Length - 1);
             int rowNumber = (int)row;
-            bool isInt = int.TryParse(col, out int colNumber );
+            bool isInt = int.TryParse(col, out int colNumber);
             
             // following magic numbers are: 97 UTF-8 for 'a'
-            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(1) ||
-                !isInt || colNumber > Board.GetLength(0))
+            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) ||
+                !isInt || colNumber > Board.GetLength(1))
             { 
                 Console.WriteLine("Please input valid coordinates");
+                goto input;
+            }
+
+            if (Board[rowNumber - 97, colNumber - 1] != 0)
+            {
+                Console.WriteLine("This field is occupied, please select empty one");
                 goto input;
             }
             
@@ -72,6 +78,11 @@ namespace five_in_a_row
 
         public void Mark(int player, int row, int col)
         {
+            if (row >= 0 && col >= 0 && row < Board.GetLength(0) && col < Board.GetLength(1))
+            {
+                if (Board[row, col] == 0)
+                    Board[row, col] = player;
+            }
         }
 
         public bool HasWon(int player, int howMany)
