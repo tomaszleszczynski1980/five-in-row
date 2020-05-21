@@ -81,7 +81,7 @@ namespace FiveInARow
             return false;
         }
 
-        public bool IsFull()
+        public bool IsNotFull()
         {
             return Board.Cast<int>().Any(element => element == 0);
         }
@@ -139,7 +139,7 @@ namespace FiveInARow
                 EnableAi(2);
             }
             
-            while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
+            while (!HasWon(1, howMany) && !HasWon(2, howMany) && IsNotFull())
             {
                 player = player == 1 ? 2 : 1;
                 
@@ -169,7 +169,7 @@ namespace FiveInARow
         (int, int) GetAiMove(int player);
         void Mark(int player, int row, int col);
         bool HasWon(int player, int howMany);
-        bool IsFull();
+        bool IsNotFull();
         void PrintBoard();
         void PrintResult(int player);
         void EnableAi(int player);
