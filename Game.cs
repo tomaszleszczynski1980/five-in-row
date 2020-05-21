@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace FiveInARow
 {
@@ -67,9 +69,36 @@ namespace FiveInARow
             return (rowNumber - 97, colNumber - 1);
         }
 
+        // this is the most stupid AI one can ever imagine - it takes random empty field
         public (int, int) GetAiMove(int player)
         {
-            return (0, 0);
+            List<Tuple<int, int>> emptyFields = new List<Tuple<int, int>>();
+            
+            for (int row = 0; row < Board.GetLength(0) - 1; row++)
+            {
+                for (int col = 0; col < Board.GetLength(1) - 1; col++)
+                {
+                    if (Board[row, col] == 0)
+                        emptyFields.Add(new Tuple<int, int>(row, col));
+                }
+            }
+            
+            var random = new Random();
+            int index = random.Next(emptyFields.Count - 1);
+            var randomField = emptyFields[index];
+
+            Console.WriteLine("");
+            Console.Write("Computer moves");
+
+            for (int i = 0; i < 4; i++)
+            {
+                Thread.Sleep(350);
+                Console.Write(".");
+                Thread.Sleep(350);
+            }
+            
+            
+            return (randomField.Item1, randomField.Item2);
         }
 
         public void Mark(int player, int row, int col)
@@ -250,6 +279,7 @@ namespace FiveInARow
 
         public void EnableAi(int player)
         {
+            Console.WriteLine("Human player (X) starts, Computer (O) plays next");
         }
 
         public void Play(int howMany)
@@ -262,7 +292,7 @@ namespace FiveInARow
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
                 Console.Clear();
-                Console.Write("Enter number of players: ");
+                Console.Write("Enter number of players (1 - human vs computer, 2 - human vs human): ");
                 int.TryParse(Console.ReadLine(), out numberOfPlayers);
             }
             
@@ -277,11 +307,14 @@ namespace FiveInARow
 
                 player = player == 1 ? 2 : 1;
 
-                coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
+                coords = numberOfPlayers == 1 && player == 2 ? GetAiMove(player) : GetMove(player);
 
                 Mark(player, coords.Item1, coords.Item2);
                 
                 PrintBoard();
+                
+                if (numberOfPlayers == 1)
+                    Thread.Sleep(500);
                 
             } while (!HasWon(player, howMany, coords) && IsNotFull());
             
@@ -297,7 +330,7 @@ namespace FiveInARow
             Console.WriteLine("");
             
             if (IsNotFull())
-                Console.WriteLine($"{player} ({sign}) won!");
+                Console.WriteLine($"Player {player} ({sign}) won!");
             else
                 Console.WriteLine("It is a tie");
             
