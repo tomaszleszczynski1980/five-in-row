@@ -1,8 +1,8 @@
 using System;
 
-namespace five_in_a_row
+namespace FiveInARow
 {
-    public class FiveInARow
+    public static class Program
     {
         public static void Main(string[] args)
         {

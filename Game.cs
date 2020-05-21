@@ -1,12 +1,11 @@
 using System;
+using System.Linq;
 
-namespace five_in_a_row
+namespace FiveInARow
 {
     public class Game : IGame
     {
-
-        public int[,] Board {get; set;}
-
+        public int[,] Board { get; set; }
 
         public Game(int nRows, int nCols)
         {
@@ -21,7 +20,6 @@ namespace five_in_a_row
                 }
             }
         }
-        
 
         public (int, int) GetMove(int player)
         {
@@ -70,6 +68,13 @@ namespace five_in_a_row
             }
         }
 
+        private static bool Comparer(int[] elementsArray)
+        {
+            int first = elementsArray[0];
+
+            return elementsArray.All(element => element == first);
+        }
+
         public bool HasWon(int player, int howMany)
         {
             return false;
@@ -77,7 +82,7 @@ namespace five_in_a_row
 
         public bool IsFull()
         {
-            return false;
+            return Board.Cast<int>().Any(element => element == 0);
         }
 
         public void PrintBoard()
@@ -157,11 +162,9 @@ namespace five_in_a_row
 
         public void Play(int howMany)
         {
-
+            
             int numberOfPlayers = 0;
-            int counter = 1;
-            int player = 1;
-            (int, int) coords;
+            int player = 2;
 
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
@@ -174,19 +177,20 @@ namespace five_in_a_row
             {
                 EnableAi(2);
             }
-
+            
             while (!HasWon(1, howMany) && !HasWon(2, howMany) && !IsFull())
             {
-
-                coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
-
-                Mark(player, coords.Item1, coords.Item2);
-
                 player = player == 1 ? 2 : 1;
+                
+                var coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
+
+                Mark(player, coords.Item1, coords.Item2 );
+                
+                PrintBoard();
             }
-
-            PrintBoard();
-
+            
+            PrintResult(player);
+            
             Console.Write("Enter any key to quit: ");
             Console.ReadLine();
         }
