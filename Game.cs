@@ -24,8 +24,12 @@ namespace FiveInARow
         public (int, int) GetMove(int player)
         {
             // TODO: refactor change goto to while
-            input: Console.Write($"Player {player} please input your move (e.g. a2):");
+            Console.WriteLine("");
+            input: Console.Write($"Player {player} please input your move (e.g. a2) /quit to exit/:");
             var move = Console.ReadLine().ToLower();
+            
+            if (move == "quit" || move == "exit")
+                Environment.Exit(0);
 
             if (move.Length == 0)
             {
@@ -37,7 +41,7 @@ namespace FiveInARow
             string col = move.Substring(1, move.Length - 1);
             int rowNumber = (int)row;
             bool isInt = int.TryParse(col, out int colNumber);
-            
+
             // following magic numbers are: 97 UTF-8 for 'a'
             if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) ||
                 !isInt || colNumber > Board.GetLength(1))
