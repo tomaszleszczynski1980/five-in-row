@@ -1,6 +1,7 @@
 using System;
+using System.Linq;
 
-namespace five_in_a_row
+namespace FiveInARow
 {
     public class Game : IGame
     {
@@ -100,7 +101,7 @@ namespace five_in_a_row
 
         public bool IsFull()
         {
-            return false;
+            return Board.Cast<int>().Any(element => element == 0);
         }
 
         public void PrintBoard()
@@ -109,9 +110,9 @@ namespace five_in_a_row
             for (int i = 0; i < Board.GetLength(0); i++)
             {
                 for (int j = 0; j < Board.GetLength(1); j++)
-            {
+                {
                     Console.Write(Board[i,j]+" ");
-            }
+                }
                 Console.WriteLine();
             }
         }
@@ -125,7 +126,6 @@ namespace five_in_a_row
             
             int numberOfPlayers = 0;
             int player = 2;
-            (int, int) coords;
 
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
@@ -143,7 +143,7 @@ namespace five_in_a_row
             {
                 player = player == 1 ? 2 : 1;
                 
-                coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
+                var coords = numberOfPlayers == 1 ? GetAiMove(player) : GetMove(player);
 
                 Mark(player, coords.Item1, coords.Item2 );
                 
