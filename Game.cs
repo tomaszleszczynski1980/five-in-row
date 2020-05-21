@@ -23,9 +23,11 @@ namespace FiveInARow
 
         public (int, int) GetMove(int player)
         {
-            // TODO: refactor change goto to while
+            char sign = player == 1 ? 'X' : 'O';
+            
             Console.WriteLine("");
-            input: Console.Write($"Player {player} please input your move (e.g. a2) /quit to exit/:");
+            input: 
+            Console.Write($"Player {player} ({sign}) please input your move (e.g. a2) /quit to exit/:");
             var move = Console.ReadLine().ToLower();
             
             if (move == "quit" || move == "exit")
@@ -33,6 +35,8 @@ namespace FiveInARow
 
             if (move.Length == 0)
             {
+                PrintBoard();
+                Console.WriteLine("");
                 Console.WriteLine("Please input valid coordinates");
                 goto input;
             }
@@ -45,14 +49,18 @@ namespace FiveInARow
             // following magic numbers are: 97 UTF-8 for 'a'
             if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) ||
                 !isInt || colNumber > Board.GetLength(1))
-            { 
+            {
+                PrintBoard();
+                Console.WriteLine("");
                 Console.WriteLine("Please input valid coordinates");
                 goto input;
             }
 
             if (Board[rowNumber - 97, colNumber - 1] != 0)
             {
-                Console.WriteLine("This field is occupied, please select empty one");
+                PrintBoard();
+                Console.WriteLine("");
+                Console.WriteLine($"Field {move} is occupied, please select empty one");
                 goto input;
             }
             
@@ -239,9 +247,10 @@ namespace FiveInARow
             int numberOfPlayers = 0;
             int player = 2;
             (int, int) coords;
-
+            
             while (numberOfPlayers != 1 && numberOfPlayers != 2)
             {
+                Console.Clear();
                 Console.Write("Enter number of players: ");
                 int.TryParse(Console.ReadLine(), out numberOfPlayers);
             }
@@ -264,16 +273,25 @@ namespace FiveInARow
                 PrintBoard();
                 
             } while (!HasWon(player, howMany, coords) && IsNotFull());
-
             
             PrintResult(player);
             
-            Console.Write("Enter any key to quit: ");
+            Console.Write("Enter anything to quit (or just press enter)");
             Console.ReadLine();
         }
         
         public void PrintResult(int player)
         {
+            char sign = player == 1 ? 'X' : 'O';
+            Console.WriteLine("");
+            
+            if (IsNotFull())
+                Console.WriteLine($"{player} ({sign}) won!");
+            else
+                Console.WriteLine("It is a tie");
+            
+            Console.WriteLine("");
+        }
         }
     }
 
@@ -291,4 +309,3 @@ namespace FiveInARow
         void EnableAi(int player);
         void Play(int howMany);
     }
-}
