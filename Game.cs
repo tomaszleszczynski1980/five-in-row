@@ -75,8 +75,18 @@ namespace FiveInARow
             return elementsArray.All(element => element == first);
         }
 
-        public bool HasWon(int player, int howMany)
+        public bool HasWon(int player, int howMany, (int, int) coords)
         {
+            // int[] myArray = new int[howMany];
+            //
+            // for (int c = -5; c < 5; c++)
+            // {
+            //     for (int i = 0; i < howMany; i++)
+            //     {
+            //         myArray[i] = Board[coords.Item1, coords.Item2];
+            //         Console.WriteLine(myArray[i]);
+            //     }
+            // }
             return false;
         }
 
@@ -153,7 +163,7 @@ namespace FiveInARow
         (int, int) GetMove(int player);
         (int, int) GetAiMove(int player);
         void Mark(int player, int row, int col);
-        bool HasWon(int player, int howMany);
+        bool HasWon(int player, int howMany, (int, int) coords);
         bool IsFull();
         void PrintBoard();
         void PrintResult(int player);
