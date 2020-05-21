@@ -82,16 +82,100 @@ namespace FiveInARow
 
         public bool HasWon(int player, int howMany, (int, int) coords)
         {
-            // int[] myArray = new int[howMany];
-            //
-            // for (int c = -5; c < 5; c++)
-            // {
-            //     for (int i = 0; i < howMany; i++)
-            //     {
-            //         myArray[i] = Board[coords.Item1, coords.Item2];
-            //         Console.WriteLine(myArray[i]);
-            //     }
-            // }
+            int[] myArray = new int[howMany];
+            
+            // Horizontal check
+            for (int c = -howMany + 1; c <= 0; c++)        
+            {
+                for (int i = 0; i <= howMany - 1; i++)
+                {
+                    try
+                    {
+                        myArray[i] = Board[coords.Item1, coords.Item2 + c + i];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        break;
+                    }
+                }
+
+                if (myArray.All(e => e == 0)) continue;
+                if (Comparer(myArray))
+                {
+                    return true;
+                }
+            }
+            // Horizontal check
+            
+            // Vertical check
+            for (int c = -howMany + 1; c <= 0; c++)
+            {
+                for (int i = 0; i <= howMany - 1; i++)
+                {
+                    try
+                    {
+                        myArray[i] = Board[coords.Item1 + c + i, coords.Item2];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        break;
+                    }
+                }
+
+                if (myArray.All(e => e == 0)) continue;
+                if (Comparer(myArray))
+                {
+                    return true;
+                }
+            }
+            // Vertical check
+            
+            // Diagonally (left higher ; right lower) check
+            for (int c = -howMany + 1; c <= 0; c++)
+            {
+                for (int i = 0; i <= howMany - 1; i++)
+                {
+                    try
+                    {
+                        myArray[i] = Board[coords.Item1 + c + i, coords.Item2 + c + i];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        break;
+                    }
+                }
+
+                if (myArray.All(e => e == 0)) continue;
+                if (Comparer(myArray))
+                {
+                    return true;
+                }
+            }
+            // Diagonally (left higher ; right lower) check
+            
+            // Diagonally (left lower ; right higher) check
+            for (int c = -howMany + 1; c <= 0; c++)
+            {
+                for (int i = 0; i <= howMany - 1; i++)
+                {
+                    try
+                    {
+                        myArray[i] = Board[coords.Item1 + c + i, coords.Item2 - c - i];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        break;
+                    }
+                }
+
+                if (myArray.All(e => e == 0)) continue;
+                if (Comparer(myArray))
+                {
+                    return true;
+                }
+            }
+            // Diagonally (left lower ; right higher) check
+            
             return false;
         }
 
@@ -179,7 +263,7 @@ namespace FiveInARow
                 
                 PrintBoard();
                 
-            } while (!HasWon(1, howMany, coords) && !HasWon(2, howMany, coords) && IsNotFull());
+            } while (!HasWon(player, howMany, coords) && IsNotFull());
 
             
             PrintResult(player);
