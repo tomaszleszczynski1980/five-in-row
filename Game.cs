@@ -50,7 +50,7 @@ namespace FiveInARow
 
             // following magic numbers are: 97 UTF-8 for 'a'
             if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) - 1 ||
-                !isInt || colNumber > Board.GetLength(1) - 1)
+                !isInt || colNumber > Board.GetLength(1) - 1 || colNumber <= 0)
             {
                 PrintBoard();
                 Console.WriteLine("");
