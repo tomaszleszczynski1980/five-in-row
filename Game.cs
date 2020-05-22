@@ -134,6 +134,10 @@ namespace FiveInARow
                     {
                         break;
                     }
+                    if (coords.Item2 == Board.GetLength(1) - 1)
+                    {
+                        break;
+                    }
                 }
 
                 if (myArray.All(e => e == 0)) continue;
@@ -157,8 +161,13 @@ namespace FiveInARow
                     {
                         break;
                     }
-                }
 
+                    if (coords.Item1 == Board.GetLength(0) - 1)
+                    {
+                        break;
+                    }
+                }
+            
                 if (myArray.All(e => e == 0)) continue;
                 if (Comparer(myArray))
                 {
@@ -169,22 +178,22 @@ namespace FiveInARow
             
             // Diagonally (left higher ; right lower) check
             for (int c = -howMany + 1; c <= 0; c++)
-            {
-                for (int i = 0; i <= howMany - 1; i++)
+            { 
+                for (int i = 0; i <= howMany - 1; i++) 
                 {
                     try
                     {
                         myArray[i] = Board[coords.Item1 + c + i, coords.Item2 + c + i];
                     }
                     catch (IndexOutOfRangeException)
-                    {
+                    { 
                         break;
                     }
                 }
 
                 if (myArray.All(e => e == 0)) continue;
                 if (Comparer(myArray))
-                {
+                { 
                     return true;
                 }
             }
@@ -206,7 +215,12 @@ namespace FiveInARow
                     }
                 }
 
-                if (myArray.All(e => e == 0)) continue;
+                if (coords.Item2 == 0)
+                {
+                    break;
+                }
+
+            if (myArray.All(e => e == 0)) continue;
                 if (Comparer(myArray))
                 {
                     return true;
