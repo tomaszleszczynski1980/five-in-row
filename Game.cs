@@ -25,6 +25,8 @@ namespace FiveInARow
 
         public (int, int) GetMove(int player)
         {
+            // TODO: Change go to.
+            // TODO: Split in 3 methods.
             char sign = player == 1 ? 'X' : 'O';
             
             Console.WriteLine("");
@@ -32,9 +34,6 @@ namespace FiveInARow
             Console.Write($"Player {player} ({sign}) please input your move (e.g. a2) /quit to exit/:");
             var move = Console.ReadLine().ToLower();
             
-            if (move == "quit" || move == "exit")
-                Environment.Exit(0);
-
             if (move.Length == 0)
             {
                 PrintBoard();
@@ -43,14 +42,17 @@ namespace FiveInARow
                 goto input;
             }
             
+            if (move == "quit" || move == "exit")
+                Environment.Exit(0);
+
             char row = move[0];
+            int rowNumber = row;    // We are taking ASCII code
             string col = move.Substring(1, move.Length - 1);
-            int rowNumber = (int)row;
             bool isInt = int.TryParse(col, out int colNumber);
 
             // following magic numbers are: 97 UTF-8 for 'a'
-            if (rowNumber < 97 || rowNumber > 96 + Board.GetLength(0) - 1 ||
-                !isInt || colNumber > Board.GetLength(1) - 1 || colNumber <= 0)
+            if ((rowNumber < 97) || (rowNumber > 96 + Board.GetLength(0) - 1) ||
+                !isInt || (colNumber > Board.GetLength(1) - 1) || (colNumber <= 0))
             {
                 PrintBoard();
                 Console.WriteLine("");
@@ -65,7 +67,7 @@ namespace FiveInARow
                 Console.WriteLine($"Field {move} is occupied, please select empty one");
                 goto input;
             }
-            
+
             return (rowNumber - 97, colNumber - 1);
         }
 
@@ -119,28 +121,43 @@ namespace FiveInARow
 
         public bool HasWon(int player, int howMany, (int, int) coords)
         {
+            // TODO: Method checking vertical and horizontal arrays.
             int[] myArray = new int[howMany];
             
             // Horizontal check
             for (int c = -howMany + 1; c <= 0; c++)        
             {
-                for (int i = 0; i <= howMany - 1; i++)
+
+
+                for (int i = 0; i < howMany; i++)
                 {
-                    try
-                    {
-                        myArray[i] = Board[coords.Item1, coords.Item2 + c + i];
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
+                    int coordX = coords.Item2 + c + i;
+
+                    if (coordX >= 0 && coordX < Board.GetLength(1))
+                        myArray[i] = Board[coords.Item1, coordX];
+                    else
                         break;
-                    }
+
                     if (coords.Item2 == Board.GetLength(1) - 1)
                     {
                         break;
                     }
                 }
-
+                
                 if (myArray.All(e => e == 0)) continue;
+
+                // if (i >= 0 && i <= Board.GetLength(0)) 
+                    //     myArray[i] = Board[coords.Item1, coords.Item2 + c + i];
+                    //
+                    // else break;
+                    //
+                    // if (coords.Item2 == Board.GetLength(1) - 1)
+                    //     break;
+                    //
+                    // if (myArray[i] == 0)
+                    //     break;
+                
+
                 if (Comparer(myArray))
                 {
                     return true;
